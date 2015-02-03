@@ -1,7 +1,7 @@
 public class Nametag {
-  private int WIDTH = 80;
-  private int MARGIN = 3;
-  private int LEFT_PADDING = 2;
+  private final int WIDTH = 80;
+  private final int MARGIN = 3;
+  private final int LEFT_PADDING = 2;
 
   
   public static void main(String[] args) {
