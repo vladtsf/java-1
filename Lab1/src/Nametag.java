@@ -1,5 +1,5 @@
 public class Nametag {
-  private final int WIDTH = 80;
+  private final int WIDTH = 75;
   private final int MARGIN = 3;
   private final int LEFT_PADDING = 2;
 
@@ -28,7 +28,7 @@ public class Nametag {
     System.out.print(text.toUpperCase());
     printCharacter(" ", spacesNumber);
     
-    if(text.length() % 2 == 1) {
+    if(text.length() % 2 == 1 && WIDTH % 2 == 0) {
       System.out.print(" ");
     }
     
