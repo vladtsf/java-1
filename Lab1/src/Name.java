@@ -7,20 +7,19 @@ public class Name {
     Name nate = new Name();
     nate.setName("Nate", "Titterton", 30);
     Name evan = new Name();
-    evan.setName("Nate", "Titterton", 30);
-    
-    System.out.println("Name: " + nate.name());
-    System.out.println("Roll call name: " + nate.rollCallName());
-    System.out.println("Initials: " + nate.initials());
-    System.out.println("Pig Latin name: " + nate.pigLatinName());
+    evan.setName("Evan", "Johnson", 30);
+
+    System.out.println("Name: \"" + nate.name() + "\"");
+    System.out.println("Roll call name: \"" + nate.rollCallName() + "\"");
+    System.out.println("Initials: \"" + nate.initials() + "\"");
+    System.out.println("Pig Latin name: \"" + nate.pigLatinName() + "\"");
     
     System.out.println("------------------------");
     
-    evan.setName("Evan", "Johnson", 30);
-    System.out.println("Name: " + evan.name());
-    System.out.println("Roll call name: " + evan.rollCallName());
-    System.out.println("Initials: " + evan.initials());
-    System.out.println("Pig Latin name: " + evan.pigLatinName());
+    System.out.println("Name: \"" + evan.name() + "\"");
+    System.out.println("Roll call name: \"" + evan.rollCallName() + "\"");
+    System.out.println("Initials: \"" + evan.initials() + "\"");
+    System.out.println("Pig Latin name: \"" + evan.pigLatinName() + "\"");
   }
   
   void setName(String firstName, String secondName, int gender) {
@@ -30,15 +29,15 @@ public class Name {
   }
   
   String name() {
-    return "\"" + capitalizeWord(firstName) + " " + capitalizeWord(secondName) + "\"";
+    return capitalizeWord(firstName) + " " + capitalizeWord(secondName);
   }
   
   String rollCallName() {
-    return "\"" + capitalizeWord(secondName) + ", " + capitalizeWord(firstName) + "\"";
+    return capitalizeWord(secondName) + ", " + capitalizeWord(firstName);
   }
   
   String initials() {
-    return "\"" + firstName.charAt(0) + secondName.charAt(0) + "\"";
+    return "" + firstName.charAt(0) + secondName.charAt(0);
   }
   
   String pigLatinName() {
