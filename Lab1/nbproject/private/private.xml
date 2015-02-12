@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/CircleArea.java</file>
-            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/Nametag.java</file>
-            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/DateConverter.java</file>
+            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/lines/Line3.java</file>
+            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/lines/PointTest.java</file>
+            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/lines/Line2.java</file>
+            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/lines/Line1.java</file>
+            <file>file:/Users/tsvang/NetBeansProjects/Lab1/src/Name.java</file>
         </group>
     </open-files>
 </project-private>

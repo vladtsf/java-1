@@ -1,7 +1,9 @@
+import java.util.Random;
+
 public class Name {
   
-  String firstName, secondName;
-  int gender;
+  private String firstName, secondName;
+  private int gender;
   
   public static void main(String[] args) {
     Name nate = new Name();

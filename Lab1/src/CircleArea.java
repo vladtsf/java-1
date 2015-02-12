@@ -1,7 +1,7 @@
 import java.util.Scanner;
         
 public class CircleArea {
-  private final float r;
+  private float r;
 
   public static void main(String[] args) {
    
