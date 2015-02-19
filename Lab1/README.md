@@ -1,7 +1,7 @@
 # Lab01
 
 There are four packages: "partA," "partB," "partC," and "lines."
-Each of them contains my solutions for your assignments.
+Each of them contains my solutions for the assignments from Lab01.
 Assignments from the part B are mostly located in the "lines" package, which was a requirement.
 
 I strove to supply tests that would cover the assigned requirements.
