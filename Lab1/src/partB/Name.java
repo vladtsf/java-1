@@ -1,5 +1,9 @@
-import java.util.Random;
+package partB;
 
+// other classes from the part B are in the "lines" package.
+
+// a copy of this class is in the "partC" package
+// this was a requirement
 public class Name {
   
   private String firstName, secondName;

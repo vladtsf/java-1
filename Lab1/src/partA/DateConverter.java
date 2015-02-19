@@ -1,3 +1,5 @@
+package partA;
+
 import java.util.Scanner;
 
 public class DateConverter {

@@ -1,3 +1,5 @@
+package partA;
+
 public class Nametag {
   private static final int WIDTH = 75;
   private static final int MARGIN = 3;
