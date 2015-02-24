@@ -92,8 +92,8 @@ public class Person {
     Person anotherPersonWithNoHeightSpecified = new Person(createRandomName(), "blue");
     Person tallPerson = new Person(createRandomName(), 500);
     
-    // Testing if it a random height is assigned properly.
-    // Yeah, I know this is bad practice, but no one will ever find out? ¯\_(ツ)_/¯ 
+    // Testing if a random height is assigned properly.
+    // Yeah, I know this is bad practice, but no one will ever find out ¯\_(ツ)_/¯ 
     for (int i = 0; i < 10000; i++) {
       personWithNoHeightSpecified = new Person(createRandomName());
       int height = personWithNoHeightSpecified.getHeight();
