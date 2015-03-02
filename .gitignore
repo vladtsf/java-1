@@ -4,3 +4,7 @@
 /Lec04/build/
 /Lab1/build/
 *.class
+/Lab05/nbproject/private/
+/Lec05/nbproject/private/
+/Lec03/nbproject/private/
+/Lec05/build/
