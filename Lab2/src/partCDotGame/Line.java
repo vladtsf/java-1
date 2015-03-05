@@ -1,4 +1,4 @@
-package partADotsAndLines;
+package partCDotGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
