@@ -1,4 +1,4 @@
-package partCDotGame;
+package DotGame;
 
 import java.awt.Color;
 import java.awt.Graphics;

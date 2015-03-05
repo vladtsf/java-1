@@ -1,4 +1,4 @@
-package partAZippingArrays;
+package ZippingArrays;
 
 public class ArrayZipper {
   

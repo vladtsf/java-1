@@ -1,4 +1,4 @@
-package partCDotGame;
+package DotGame;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import partBDotsAndLines.DotsAndLines;
+import DotsAndLines.DotsAndLines;
 
 public class DotGame extends DotsAndLines {
   

@@ -1,4 +1,4 @@
-package partCDotGame;
+package DotGame;
 import java.util.ArrayList;
 import java.awt.Point;
 
