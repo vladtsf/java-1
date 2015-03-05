@@ -9,7 +9,7 @@ import java.util.ArrayList;
 // We'll talk about the "extends" keyword soon.
 public class DotsAndLines extends MouseListenerDrawer {
 
-    private final int DOT_RADIUS = 5;
+    protected final int DOT_RADIUS = 5;
     protected ArrayList<Point> points;
 
     

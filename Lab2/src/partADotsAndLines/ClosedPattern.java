@@ -66,7 +66,7 @@ public class ClosedPattern extends DotsAndLines {
   @Override
   public void paintComponent(Graphics g) {
     // erase the window
-    erase(g);
+    super.paintComponent(g);
 
     if(isClosed) {        
       for (int i = 0; i<points.size(); i++) {
@@ -77,17 +77,6 @@ public class ClosedPattern extends DotsAndLines {
       }
 
       drawLine(g, points.get(0), points.get(points.size() - 1), Color.BLACK);
-    }
-
-    // draw everything
-    int lastIndex = points.size() - 1;
-
-    for (int i = 0; i<points.size(); i++) {
-        Point p = points.get(i);
-        drawPoint(g, p, Color.red);
-        if (i != lastIndex) {
-            drawLine(g, p, points.get(i+1), Color.BLACK);
-        }
     }
   }
 }
