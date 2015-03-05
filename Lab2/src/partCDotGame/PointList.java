@@ -19,6 +19,17 @@ public class PointList {
     }
   }
   
+  private Line getConnection(Point p1, Point p2) {
+    for (Line connection : connections) {
+      if(connection.p1 == p1 && connection.p2 == p2
+          || connection.p1 == p2 && connection.p2 == p1) {
+        return connection;
+      }
+    }
+    
+    return null;
+  }
+  
   public ArrayList<Line> getConnections() {
     return connections;
   }
@@ -61,7 +72,7 @@ public class PointList {
         }
       }
       
-      connections.get(points.size()).toggle(true);
+      getConnection(points.get(0), points.get(points.size() - 1)).toggle(true);
     }
   }
 }
