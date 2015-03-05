@@ -10,7 +10,7 @@ import DotsAndLines.DotsAndLines;
 
 public class DotGame extends DotsAndLines {
   
-  protected boolean closedMode = false;
+  protected boolean isInToggleMode = false;
   private final PointList pointList = new PointList(points);
   protected boolean isGameWon = false;
   private static final String winText = "You win!";
@@ -35,14 +35,14 @@ public class DotGame extends DotsAndLines {
     Point p_clicked = new Point(event.getX(), event.getY());
     
     if(!isGameWon) {
-      if(!closedMode) {
+      if(!isInToggleMode) {
         if(makesClosed(p_clicked)) {
-          closedMode = true;
+          isInToggleMode = true;
         } else {
           points.add(new Point(p_clicked));
         } 
 
-        pointList.rebuildConnections(closedMode);
+        pointList.rebuildConnections(isInToggleMode);
       } else {
         for (Point point : points) {
           if(closeTo(point, p_clicked)) {
@@ -51,7 +51,7 @@ public class DotGame extends DotsAndLines {
         }
       }
       
-      if(pointList.getVisibleConnections().isEmpty() && closedMode) {
+      if(pointList.getVisibleConnections().isEmpty() && isInToggleMode) {
         isGameWon = true;
       }
     }
