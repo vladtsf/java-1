@@ -1,4 +1,4 @@
-package partADotsAndLines;
+package partBDotsAndLines;
 
 
 import java.awt.*;

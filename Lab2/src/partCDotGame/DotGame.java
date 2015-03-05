@@ -6,7 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import partADotsAndLines.DotsAndLines;
+import partBDotsAndLines.DotsAndLines;
 
 public class DotGame extends DotsAndLines {
   
