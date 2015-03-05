@@ -67,7 +67,7 @@ public class DotGame extends DotsAndLines {
     erase(g);
     
     if(isGameWon) {
-      g.setFont(new Font("Arial", Font.BOLD, 24)); 
+      g.setFont(new Font("Serif", Font.BOLD, 24)); 
       
       FontMetrics fm = g.getFontMetrics();
       int left = (int) myWindowWidth / 2 - fm.stringWidth(winText) / 2;
