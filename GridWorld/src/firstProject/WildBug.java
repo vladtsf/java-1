@@ -14,7 +14,7 @@ public class WildBug extends Bug {
 
   @Override
   public void act() {
-    for (int i = 0; i < rand.nextInt(4); i++) {
+    for (int i = 0; i < rand.nextInt(4  ); i++) {
       turn();
     }
 
