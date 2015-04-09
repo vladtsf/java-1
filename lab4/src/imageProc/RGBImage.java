@@ -124,8 +124,8 @@ public class RGBImage {
         blue[w][h] = avg;
       }
     }
+    
     refresh();
-
   }
 
     // mirror image from a file by modifying one half of the picture so that it 
@@ -145,14 +145,53 @@ public class RGBImage {
     refresh();
   }
 
+  
+  //  Honestly, I didn't get how I was supposed to deal with contrast,
+  //  but I decided to allow the users to set the level of contrast.
+  //  The algorithm is taken from the Internet (http://stackoverflow.com/questions/8990926/faster-contrast-algorithm-for-a-bitmap)
+  //  and ported to JAVA.
+  private int applyContrastToPixel(int pixelValue, double contrast) {
+    double factor = (100 + contrast) / 100;
+    
+    double newPixel = pixelValue;
+    newPixel /= 255;
+    newPixel -= .5;
+    newPixel *= factor;
+    newPixel += .5;
+    newPixel *= 255;
+    
+    if(newPixel < 0) {
+      newPixel = 0;
+    } else if(newPixel > 255) {
+      newPixel = 255;
+    }
+    
+    return (int) newPixel;
+  }
+  
   /* Images can often have low contrast because the values of their pixels 
    * only span part of the 0-255 range of possible values. This can make 
    * images "too dark" (if the values are all too low) or "washed out" (if 
    * the values are all too high). A simple way to increase the contrast 
    * in an image therefore is to scale the values so they fill this range. 
    */
-  public void contrastStretch() {
+  public void contrastStretch(double contrast) {
+    int width = red.length;
+    int height = red[0].length;
 
+    for(int y = 0, x; y < height; y++) {
+      for(x = 0; x < width; x++) {
+        red[x][y] = applyContrastToPixel(red[x][y], contrast);
+        green[x][y] = applyContrastToPixel(green[x][y], contrast);
+        blue[x][y] = applyContrastToPixel(blue[x][y], contrast);
+      }
+    }
+    
+    refresh();
+  }
+  
+  public void contrastStretch() {
+    contrastStretch(50);
   }
 
   public void threshHolding(int threshhold) {
@@ -177,25 +216,25 @@ public class RGBImage {
     refresh();
   }
 
-    // this adds a 5 pixel black border around the image, losing the 
+  // this adds a 5 pixel black border around the image, losing the 
   // information in those pixels. If the picture has a width or height
   // less than 5 pixels, this method must not crash!
   public void addBorder(int xBorder, int yBorder) {
     int width = red.length;
     int height = red[0].length;
     
+    xBorder = xBorder > width ? width : xBorder;
+    yBorder = yBorder > height ? height : yBorder;
+    
     int points = 0;
     
     for(int y = 0, x; y < height; y++) {
       for(x = 0; x < width; x++) {
         
-        if(x < xBorder || x >= width - xBorder || y < yBorder || y >= height - yBorder) {
+        if(x < xBorder || x >= width - xBorder - 1 || y < yBorder || y >= height - yBorder - 1) {
           red[x][y] = green[x][y] = blue[x][y] = 0;
         }
       }
-      
-      System.out.println(y + ":" + (y > height - yBorder));
-      
     }
     
 

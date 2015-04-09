@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -62,7 +63,7 @@ public class RGBImageViewer {
             frame.getContentPane().remove(myImagePanel);        // remove the current image
         frame.getContentPane().add(BorderLayout.CENTER, anImagePanel);
         frame.setTitle(anImagePanel.getTitle());                // sets the window title .
-        frame.setSize(frame.getPreferredSize());    // change the window size to fit the image
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize()); // sorry, I had to change this since it didn't choose the correct size and the border wasn't visible
         frame.validate();                           // re-layout the components, since they changed.
         frame.repaint();
         myImagePanel = anImagePanel;
