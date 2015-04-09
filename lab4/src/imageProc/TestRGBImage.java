@@ -30,9 +30,6 @@ public class TestRGBImage {
         seagull.mirrorHorizontal();
         seagull.addBorder();
         seagull.contrastStretch(100);
-        
-        
-        
     }
     
     public static void testOn5x5() {
