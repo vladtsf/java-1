@@ -1,12 +1,7 @@
 package imageProc;
 
 public class SpatialFilter implements ISpatialFilter {
-  private RGBImage image;
-  private Filter filter;
-  
-  private int[][] red, green, blue;
-  private int width, height;
-  
+
   public static class Filter {
     private double[][] coeffs;
 
@@ -74,6 +69,12 @@ public class SpatialFilter implements ISpatialFilter {
   * 
   */
   private static class SpatialFilterPixelIsNotCalculatableException extends Exception {}
+  
+  private RGBImage image;
+  private Filter filter;
+  
+  private int[][] red, green, blue;
+  private int width, height;
   
   public SpatialFilter(RGBImage image) {
     this.image = image;
