@@ -30,6 +30,17 @@ public class TestRGBImage {
         seagull.mirrorHorizontal();
         seagull.addBorder();
         seagull.contrastStretch(100);
+        seagull.smoothen();
+//        seagull.sharpen();
+//        seagull.applyVerticalEdgeDetection();
+//        seagull.applyHorizontalEdgeDetection();
+//        seagull.spatialFilter(new double[][]{
+//          {-1,-1,-1,-1,1},
+//          {-1,-1,-1,1,1},
+//          {-1,-1,1,1,1},
+//          {-1,1,1,1,1},
+//          {1,1,1,1,1}
+//        });
     }
     
     public static void testOn5x5() {

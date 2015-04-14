@@ -136,7 +136,7 @@ public class RGBImage {
   public void mirrorHorizontal() {
     int width = red.length;
 
-    for (int x = ((int) width / 2); x > 0; x--) {
+    for (int x = ((int) (width / 2) - 1); x > 0; x--) {
       red[x] = red[width - x];
       green[x] = green[width - x];
       blue[x] = blue[width - x];
@@ -248,4 +248,38 @@ public class RGBImage {
   public void addBorder() {
     addBorder(5);
   }
+  
+  public void spatialFilter(double[][] filter) {
+    spatialFilter(new SpatialFilter.Filter(filter));
+  }
+  
+  public void spatialFilter(SpatialFilter.Filter filter) {
+    SpatialFilter img = new SpatialFilter(this);
+    img.setFilter(filter);
+    img.apply();
+    refresh();
+  }
+  
+  public void smoothen() {
+    spatialFilter(new SpatialFilter.Filter.Smoothing());
+  }
+  
+  public void sharpen() {
+    spatialFilter(new SpatialFilter.Filter.Sharpening());
+  }
+  public void applyVerticalEdgeDetection() {
+    spatialFilter(new SpatialFilter.Filter.VerticalEdgeDetection());
+  }
+  
+  public void applyHorizontalEdgeDetection() {
+    spatialFilter(new SpatialFilter.Filter.HorizontalEdgeDetection());
+  }
+  
+  public int[][][] getRGBMask() {
+    return new int[][][] {
+      red, green, blue
+    };
+  }
+  
+//  public void setRGB
 }
