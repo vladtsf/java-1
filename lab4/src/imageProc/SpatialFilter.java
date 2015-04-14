@@ -1,6 +1,6 @@
 package imageProc;
 
-public class SpatialFilter {
+public class SpatialFilter implements ISpatialFilter {
   private RGBImage image;
   private Filter filter;
   
