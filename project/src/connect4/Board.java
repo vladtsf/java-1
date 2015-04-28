@@ -1,5 +1,6 @@
 package connect4;
 
+import connect4.move.BombMove;
 import connect4.move.Move;
 import connect4.player.Player;
 
@@ -53,57 +54,58 @@ public class Board {
       return grid[row][col];
     }
   }
-
+  
   // Returns true if move is possible given board state.  
   public boolean possibleMove(Move move) {
-    return grid[rows - 1][move.getColumn()] == null;
-  }
-  
-  private int possibleMoveRow(Move move) {
-    for (int i = 0; i < rows; i++) {
-      if(grid[i][move.getColumn()] == null) {
-        return i;
-      }
+    if(move instanceof BombMove) {
+      return true;
     }
     
-    return -1;
+    return grid[rows - 1][move.getColumn()] == null;
   }
 
   // Adds a piece to the board for a given Move
   public void addPiece(Move move) {
-    if(possibleMove(move)) {
-      int row = possibleMoveRow(move);
-      move.setRow(row);
-      grid[row][move.getColumn()] = move.getPlayer();
+    for (int y = 0; y < rows; y++) {
+      if(grid[y][move.getColumn()] == null) {
+        grid[y][move.getColumn()] = move.getPlayer();
+        move.setRow(y);
+        return;
+      }
     }
   }
 
   // if the board contains a winning position, returns the Player that wins.
   // Otherwise, returns null.  You could ignore lastMove.
   public Player winner(Move lastMove) {
-    for(int x = -1; x <= 1; x++) {
-      for(int y = -1; y <= 1 && !(x == 0 && y == 0); y++) {
-        try {
-          for(int i = 0; grid[lastMove.getRow() + i * y][lastMove.getColumn() + i * x] == lastMove.getPlayer(); i++) {
-            // check boundaries         
-            if(i == CONNECT_HOW_MANY - 1) {
-              return lastMove.getPlayer();
-            }
-          }
-        } catch(ArrayIndexOutOfBoundsException e) {
+    for(int x = 0; x <= 1; x++) {
+      for(int y = 0; y <= 1; y++) {
+        if(x == 0 && y == 0) {
           continue;
+        }
+        
+        if(1 + checkWinnerInDirection(lastMove, x, y) + checkWinnerInDirection(lastMove, -x, -y) >= CONNECT_HOW_MANY) {
+          return lastMove.getPlayer();
         }
       }
     }
-      
-    // TODO: write this.  Currently, there is never a winner.
     return null;
   }
   
-//  private void winner(Move lastMove, int x, int y) {
-//    
-//  }
-  
-  
-
+  private int checkWinnerInDirection(Move move, int xDirection, int yDirection) {
+    int x = move.getColumn();
+    int y = move.getRow();
+    
+    for (int i = 1; i <= CONNECT_HOW_MANY; i++) {
+      try {
+        if(grid[y + i * yDirection][x + i * xDirection] != move.getPlayer()) {
+          return i - 1;
+        }
+      } catch (ArrayIndexOutOfBoundsException e) {
+        return i - 1;
+      }
+    }
+    
+    return 0;
+  }
 } // end Board class

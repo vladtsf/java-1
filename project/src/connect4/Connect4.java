@@ -30,6 +30,8 @@ public class Connect4 extends JPanel implements MouseListener {
   // this contains the ordered list of players in the game
   private ArrayList<Player> players;
   private int currentPlayerIndex = 0;
+  
+  private boolean isGameOver = false;
 
   /**
    * creates the connect four interface with the specified number of rows and
@@ -86,12 +88,17 @@ public class Connect4 extends JPanel implements MouseListener {
   }
 
   private void takeTurn(Move move) {
+    if(isGameOver) {
+      return;
+    }
+    
     myBoard.addPiece(move);
     message = getCurrentPlayer().getName() + " goes in column " + move.getColumn() + ".  ";
 
     System.out.println(myBoard.winner(move));
     
     if (myBoard.winner(move) != null) {
+      isGameOver = true;
       message += getCurrentPlayer().getName() + " wins!  " + getCurrentPlayer().getName() + " wins!  ";
       repaint();
     } else {
