@@ -9,7 +9,8 @@ import connect4.player.Player;
 public class BombMove extends Move {
 
     // We need to specify this, since the constructor takes an argument
-    public BombMove (int column, Player player) {
-        super(column, player);
+    public BombMove (int column, int row, Player player) {
+      super(column, player);
+      this.row = row;
     }
 }

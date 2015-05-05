@@ -1,18 +1,18 @@
 package connect4;
 
+import connect4.move.BombMove;
 import connect4.move.Move;
 import connect4.player.Player;
 import connect4.player.ComputerPlayer;
 import connect4.player.StupidComputerPlayer;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.event.*;
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Connect4 extends JPanel implements MouseListener {
+public class Connect4 extends JPanel implements MouseListener, KeyListener {
 
     // These control the size of the board.  The traditional Connect 4 board is 
   // seven spaces wide by six spaces high
@@ -32,7 +32,14 @@ public class Connect4 extends JPanel implements MouseListener {
   private int currentPlayerIndex = 0;
   
   private boolean isGameOver = false;
+  
+  // literally tells us if the "b" button is pressed 
+  private boolean isBombMoveRequested = false;
 
+  private Cursor bombSelectedCursor;
+  private Cursor bombSelectedDisabledCursor;
+  
+  
   /**
    * creates the connect four interface with the specified number of rows and
    * colonms
@@ -52,12 +59,26 @@ public class Connect4 extends JPanel implements MouseListener {
     //myFrame.setResizable( false );
     myFrame.setTitle("Connect Four");
     myFrame.setVisible(true);
-
+    
+    myFrame.setFocusable(true);
+    myFrame.addKeyListener(this);
+    
+    initCursors();
+    
     // start a new game 
     newGame();
   }
 
-    //////  Gameplay
+  private void initCursors() {
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    Image bomb = toolkit.getImage("assets/images/bomb.gif");
+    Image disabledBomb = toolkit.getImage("assets/images/bomb-disabled.gif");
+    Point cursorHotSpot = new Point(16, 16);
+    bombSelectedCursor = toolkit.createCustomCursor(bomb, cursorHotSpot, "BombSelectedCursor");
+    bombSelectedDisabledCursor = toolkit.createCustomCursor(disabledBomb, cursorHotSpot, "BombSelectedDisabledCursor");
+  }
+  
+  //////  Gameplay
   //////
   // Note, the main loop in the gameplay (players alternating turns) happens between 
   //  the play() and takeTurn() methods.  These call each other, which is a type of
@@ -127,33 +148,99 @@ public class Connect4 extends JPanel implements MouseListener {
       currentPlayerIndex = 0;
     }
   }
-
+  
   //////Listener
   //////
+  @Override
   public void mouseClicked(MouseEvent e) {
+    Player player = getCurrentPlayer();
     // only process the click if the current player isn't a computer player
-    if (!(getCurrentPlayer() instanceof ComputerPlayer)) {
+    if (!(player instanceof ComputerPlayer)) {
       // find out which column was clicked on...
-      int c = myBoard.getCols();
-      while ((e.getX() < horizontalPos(c)) && (c > 0)) {
-        c--;
+      int column = myBoard.getCols();
+      
+      while ((e.getX() < horizontalPos(column)) && (column > 0)) {
+        column--;
       }
+      
+      // find out which column was clicked on...
+      int row = 0;
+      
+      while ((e.getY() < verticalPos(row)) && (row < myBoard.getRows())) {
+        row++;
+      }
+      
       // and restart the gameplay recursion
-      takeTurn(new Move(c, getCurrentPlayer()));
+      Move move = new Move(column, player);
+
+      try {
+        if(isBombMoveRequested) {
+          move = new BombMove(column, row, player);
+          player.useBomb();
+          
+          if(!player.hasBomb()) {
+            myFrame.setCursor(bombSelectedDisabledCursor);
+            isBombMoveRequested = false;
+          }
+        }
+      } catch (Player.PlayerOutOfBombsException ex) {
+        Logger.getLogger(Connect4.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+      takeTurn(move);
     }
   }
 
+  @Override
   public void mouseEntered(MouseEvent e) {
   }
 
+  @Override
   public void mouseExited(MouseEvent e) {
   }
 
+  @Override
   public void mousePressed(MouseEvent e) {
   }
 
+  @Override
   public void mouseReleased(MouseEvent e) {
   }
+  
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if(isGameOver) {
+      return;
+    }
+    
+    // "b" is pressed
+    if(e.getKeyCode() == 66) {
+      Player player = getCurrentPlayer();
+      
+      if(player.hasBomb()) {
+        isBombMoveRequested = true;
+        myFrame.setCursor(bombSelectedCursor);
+      } else {
+        myFrame.setCursor(bombSelectedDisabledCursor);
+      }
+      
+    } 
+  }
+  
+  @Override
+  public void keyReleased(KeyEvent e) {
+    // "b" is released
+    if(e.getKeyCode() == 66) {
+      isBombMoveRequested = false;
+      myFrame.setCursor(Cursor.DEFAULT_CURSOR);
+    }
+  }
+  
+  @Override
+  public void keyTyped(KeyEvent e) {
+  }
+  
+//  public void 
 
   ///// GRAPHICS
   /////
@@ -182,7 +269,7 @@ public class Connect4 extends JPanel implements MouseListener {
     }
   }
 
-  //shows a piece at location row r and col c for given color
+  //shows a piece at location row r and col column for given color
   private void drawPiece(Graphics g, int r, int c, Color color) {
     g.setColor(color);
     g.fillOval(horizontalPos(c), verticalPos(r), pieceSize, pieceSize);
@@ -191,7 +278,7 @@ public class Connect4 extends JPanel implements MouseListener {
     g.drawOval(horizontalPos(c) - 1, verticalPos(r) - 1, pieceSize + 1, pieceSize + 1);
 
         //g.setColor( new Color( 128, 128, 0 ) );
-    //g.drawOval( horizontalPos(c), verticalPos(r), pieceSize, pieceSize );
+    //g.drawOval( horizontalPos(column), verticalPos(r), pieceSize, pieceSize );
   }
 
   // returns the horizontal pixel position of a given 0-based column index   

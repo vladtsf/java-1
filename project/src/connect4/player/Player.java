@@ -7,6 +7,12 @@ import java.awt.Color;
  * Represents players who get their input from a listener (i.e., a users click)
  */
 public class Player {
+  
+  public class PlayerOutOfBombsException extends Exception {
+    PlayerOutOfBombsException(String name) {
+      super("Player " + name + " doesn't have any bombs to use!");
+    }
+  }
 
 	private String name;
 	private Color color;
@@ -33,9 +39,9 @@ public class Player {
     
 
     // this method will generate an error -- an exception! -- if there are no bombs.
-    public void useBomb() throws Exception {
+    public void useBomb() throws PlayerOutOfBombsException {
         if (numBombs == 0) {
-            throw new Exception("Player " + name + " doesn't have any bombs to use!");
+            throw new PlayerOutOfBombsException(name);
         } else {
             numBombs -= 1;
         }

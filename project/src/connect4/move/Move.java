@@ -6,7 +6,7 @@ public class Move {
 
   private int column;
   private Player player;
-  private int row;
+  protected int row;
 
   /**
    * Constructor for objects of class Move

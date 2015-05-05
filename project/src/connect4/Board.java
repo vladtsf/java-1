@@ -23,7 +23,6 @@ public class Board {
     grid = new Player[rows][cols];
     // set each cell of the board to null (empty).
     reset();
-
   }
 
   public void reset() {
@@ -80,13 +79,42 @@ public class Board {
     return false;
   }
   
+  // Used only when bomb is landed to get rid of the shifts 
+  // that the bomb left after itself
+  public void normalize() {
+    for (int x = cols - 1; x >= 0; x--) {
+      for(int y = 0; y < rows; y++) {
+        for(int y1 = y + 1; y1 < rows; y1++) {
+          if(grid[y][x] == null) {
+            grid[y][x] = grid[y1][x];
+            grid[y1][x] = null;
+          }
+        }
+      }
+    }
+  }
+  
   // Adds a piece to the board for a given Move
   public void addPiece(Move move) {
-    for (int y = 0; y < rows; y++) {
-      if(grid[y][move.getColumn()] == null) {
-        grid[y][move.getColumn()] = move.getPlayer();
-        move.setRow(y);
-        return;
+    if(move instanceof BombMove) {
+      for(int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+          try {
+            grid[move.getRow() + dy][move.getColumn() + dx] = null;
+          } catch(ArrayIndexOutOfBoundsException e) {
+            // it's okay, just don't do anything
+          }
+        }
+      }
+      
+      normalize();
+    } else {
+      for (int y = 0; y < rows; y++) {
+        if(grid[y][move.getColumn()] == null) {
+          grid[y][move.getColumn()] = move.getPlayer();
+          move.setRow(y);
+          return;
+        }
       }
     }
   }
