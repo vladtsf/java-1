@@ -88,6 +88,14 @@ public class Connect4 extends JPanel implements MouseListener {
   }
 
   private void takeTurn(Move move) {
+    // quit
+    if(!myBoard.isPossibleMove()) {
+      isGameOver = true;
+      message = "Draw – No one won.  ";
+      repaint();
+      return;
+    }
+    
     if(isGameOver) {
       return;
     }
@@ -95,8 +103,6 @@ public class Connect4 extends JPanel implements MouseListener {
     myBoard.addPiece(move);
     message = getCurrentPlayer().getName() + " goes in column " + move.getColumn() + ".  ";
 
-    System.out.println(myBoard.winner(move));
-    
     if (myBoard.winner(move) != null) {
       isGameOver = true;
       message += getCurrentPlayer().getName() + " wins!  " + getCurrentPlayer().getName() + " wins!  ";
@@ -149,7 +155,7 @@ public class Connect4 extends JPanel implements MouseListener {
   public void mouseReleased(MouseEvent e) {
   }
 
-    ///// GRAPHICS
+  ///// GRAPHICS
   /////
   public void paint(Graphics g) {
     g.setColor(Color.BLUE);

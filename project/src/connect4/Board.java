@@ -3,6 +3,7 @@ package connect4;
 import connect4.move.BombMove;
 import connect4.move.Move;
 import connect4.player.Player;
+import java.awt.Color;
 
 public class Board {
 
@@ -64,6 +65,21 @@ public class Board {
     return grid[rows - 1][move.getColumn()] == null;
   }
 
+  public boolean isPossibleMove() {
+    Player dummyPlayer = new Player("dummy", Color.yellow);
+    Move move;
+            
+    for (int i = cols - 1; i >= 0; i--) {
+      move = new Move(i, dummyPlayer);
+      
+      if(possibleMove(move)) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
   // Adds a piece to the board for a given Move
   public void addPiece(Move move) {
     for (int y = 0; y < rows; y++) {
