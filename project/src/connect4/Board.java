@@ -122,8 +122,8 @@ public class Board {
   // if the board contains a winning position, returns the Player that wins.
   // Otherwise, returns null.  You could ignore lastMove.
   public Player winner(Move lastMove) {
-    for(int x = 0; x <= 1; x++) {
-      for(int y = 0; y <= 1; y++) {
+    for(int x = -1; x <= 1; x++) {
+      for(int y = -1; y <= 1; y++) {
         if(x == 0 && y == 0) {
           continue;
         }
