@@ -1,6 +1,7 @@
 package connect4.player;
 
 import connect4.Board;
+import connect4.Connect4;
 import connect4.move.Move;
 import java.awt.Color;
 import java.util.Random;

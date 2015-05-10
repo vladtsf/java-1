@@ -4,6 +4,7 @@ import connect4.move.BombMove;
 import connect4.move.Move;
 import connect4.player.Player;
 import connect4.player.ComputerPlayer;
+import connect4.player.SmartComputerPlayer;
 import connect4.player.StupidComputerPlayer;
 import java.awt.*;
 import java.awt.event.*;
@@ -88,7 +89,8 @@ public class Connect4 extends JPanel implements MouseListener, KeyListener {
     myBoard.reset();
     players = new ArrayList<Player>();
     Player p1 = new Player("Jane", Color.black);
-    StupidComputerPlayer p2 = new StupidComputerPlayer("Robot Joe", Color.red);
+//    StupidComputerPlayer p2 = new StupidComputerPlayer("Robot Joe", Color.red);
+    ComputerPlayer p2 = new SmartComputerPlayer("Robot Joe", Color.red, this);
     players.add(p1);
     players.add(p2);
 
@@ -97,6 +99,14 @@ public class Connect4 extends JPanel implements MouseListener, KeyListener {
     play();
   }
 
+  public ArrayList<Player> getPlayers() {
+    return players;
+  } 
+  
+  public Board getBoard() {
+    return myBoard;
+  }
+  
   // start the recursion to play the game.  
   private void play() {
     if ((getCurrentPlayer() instanceof ComputerPlayer)) {
