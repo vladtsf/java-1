@@ -2,6 +2,7 @@ package connect4.player;
 
 import connect4.Connect4;
 import connect4.Board;
+import connect4.move.BombMove;
 import connect4.move.Move;
 import java.awt.Color;
 import java.util.Random;
@@ -80,13 +81,32 @@ public class SmartComputerPlayer extends ComputerPlayer {
     // if we know for sure that some move can make us a winner,
     // we should definitely make that move
     public Move otherSmartThing(Board board) {
-      for (int col = 0; col < board.getCols(); col++) {
-        Board newBoard = board.clone();
-        
+      
+      for (int col = 0; col < board.getCols(); col++) {  
         Move move = new Move(col, this, app);
-        if(newBoard.winner(move) != null) {
-          if(newBoard.possibleMove(move))
+        if(board.winner(move) != null) {
+          if(board.possibleMove(move))
           return move;
+        }
+      }
+      
+      return null;
+    }
+    
+    private BombMove considerBombMove(Board board) {
+      if(!this.hasBomb()) {
+        return null;
+      }
+      
+      for (Player player : app.getPlayers()) {
+        if(player != this) {
+          for (int col = 0; col < board.getCols(); col++) {
+            Move move = new Move(col, player, app);
+            
+            if(board.winner(move) != null) {
+              return new BombMove(move.getColumn(), move.getRow(), this);
+            }
+          }
         }
       }
       
@@ -98,6 +118,7 @@ public class SmartComputerPlayer extends ComputerPlayer {
       Move checkMate = checkMateBlock(board);
       Move twoInRow = twoInRowBlock(board);
       Move otherSmartThing = otherSmartThing(board);
+      BombMove bombMove = considerBombMove(board);
 
       if(checkMate != null) {
         return checkMate;
@@ -109,6 +130,10 @@ public class SmartComputerPlayer extends ComputerPlayer {
       
       if(otherSmartThing != null) {
         return otherSmartThing;
+      }
+      
+      if(bombMove != null) {
+        return bombMove;
       }
       
       return closestToCenter(board);
