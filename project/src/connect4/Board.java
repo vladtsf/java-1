@@ -139,6 +139,25 @@ public class Board implements Cloneable {
     return null;
   }
   
+  public Player winner() {
+    for (int row = 0; row < getRows(); row++) {
+      for(int col = 0; col < getCols(); col++) {
+        Player player;
+        
+        if((player = getCell(row, col)) != null) {
+          Move move = new Move(col, player);
+          Player winner;
+          move.setRow(row);
+          if((winner = winner(move)) != null) {
+            return winner;
+          }
+        }
+      }  
+    }
+    
+    return null;
+  }
+  
   private int checkWinnerInDirection(Move move, int xDirection, int yDirection) {
     int x = move.getColumn();
     int y = move.getRow();

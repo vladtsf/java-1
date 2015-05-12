@@ -89,8 +89,8 @@ public class Connect4 extends JPanel implements MouseListener, KeyListener {
     myBoard.reset();
     players = new ArrayList<Player>();
     Player p1 = new Player("Jane", Color.black);
-//    StupidComputerPlayer p2 = new StupidComputerPlayer("Robot Joe", Color.red);
-    ComputerPlayer p2 = new SmartComputerPlayer("Robot Joe", Color.red, this);
+//    Player p2 = new Player("Joe", Color.red);
+    Player p2 = new SmartComputerPlayer("Robot Joe", Color.red, this);
     players.add(p1);
     players.add(p2);
 
@@ -134,7 +134,13 @@ public class Connect4 extends JPanel implements MouseListener, KeyListener {
     myBoard.addPiece(move);
     message = getCurrentPlayer().getName() + " goes in column " + move.getColumn() + ".  ";
 
-    if (myBoard.winner(move) != null) {
+    Player winner;
+    
+    if(move instanceof BombMove && (winner = myBoard.winner()) != null) {
+      isGameOver = true;
+      message += winner.getName() + " wins!  " + winner.getName() + " wins!  ";
+      repaint();
+    } else if (myBoard.winner(move) != null) {
       isGameOver = true;
       message += getCurrentPlayer().getName() + " wins!  " + getCurrentPlayer().getName() + " wins!  ";
       repaint();
