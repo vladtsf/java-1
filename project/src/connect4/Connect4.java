@@ -197,7 +197,9 @@ public class Connect4 extends JPanel implements MouseListener, KeyListener {
         Logger.getLogger(Connect4.class.getName()).log(Level.SEVERE, null, ex);
       }
       
-      takeTurn(move);
+      if(myBoard.possibleMove(move)) {
+        takeTurn(move);
+      }
     }
   }
 
