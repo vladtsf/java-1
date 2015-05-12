@@ -56,10 +56,48 @@ public class SmartComputerPlayer extends ComputerPlayer {
       return null;
     }
     
+    private Move closestToCenter(Board board) {
+      for(int row = 0; row < board.getRows(); row++) {
+        for(int d = 0; d < board.getCols() / 2; d++) {
+          try {
+            int col1 = ((int) (board.getCols() / 2)) + d;
+            int col2 = ((int) (board.getCols() / 2)) - d;
+            
+            if(board.getCell(row, col1) == null) {
+              return new Move(col1, this, app);
+            } else if(board.getCell(row, col2) == null) {
+              return new Move(col2, this, app);
+            }
+          } catch (ArrayIndexOutOfBoundsException e) {
+          }
+        }
+      }
+      
+      // it should neve happen      
+      return null;
+    }
+    
+    // if we know for sure that some move can make us a winner,
+    // we should definitely make that move
+    public Move otherSmartThing(Board board) {
+      for (int col = 0; col < board.getCols(); col++) {
+        Board newBoard = board.clone();
+        
+        Move move = new Move(col, this, app);
+        if(newBoard.winner(move) != null) {
+          if(newBoard.possibleMove(move))
+          return move;
+        }
+      }
+      
+      return null;
+    }
+    
     @Override
     public Move getMove(Board board) {
       Move checkMate = checkMateBlock(board);
       Move twoInRow = twoInRowBlock(board);
+      Move otherSmartThing = otherSmartThing(board);
 
       if(checkMate != null) {
         return checkMate;
@@ -69,7 +107,11 @@ public class SmartComputerPlayer extends ComputerPlayer {
         return twoInRow;
       }
       
-      return( new Move(randGen.nextInt(board.getCols()), this) );
+      if(otherSmartThing != null) {
+        return otherSmartThing;
+      }
+      
+      return closestToCenter(board);
     }
     
 
