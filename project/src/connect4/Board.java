@@ -4,13 +4,16 @@ import connect4.move.BombMove;
 import connect4.move.Move;
 import connect4.player.Player;
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Board {
+public class Board implements Cloneable {
 
   private int rows;
   private int cols;
   
-  private final int CONNECT_HOW_MANY = 4;
+  public final int CONNECT_HOW_MANY = 4;
 
   /**
    * The grid of pieces
@@ -151,5 +154,19 @@ public class Board {
     }
     
     return 0;
+  }
+  
+  @Override
+  public Board clone() {
+    Board board = new Board(rows, cols);
+    board.grid = new Player[rows][cols];
+    
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        board.grid[i][j] = grid[i][j];
+      }
+    }
+    
+    return board;
   }
 } // end Board class
