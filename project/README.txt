@@ -18,3 +18,8 @@ and generates a board based on what it has read. It's very convenient.
 Running Tests:
 ------------------------
 Tests can be run with JUnit.
+
+Bomb Usage:
+------------------------
+To make a so called bomb move, one should press the "b" button and chose a desired location using the cursor.
+Once "b" is pressed, the cursor will change its icon. If you try to use a bomb while you're out, the cursor icon will indicate so, as well.
