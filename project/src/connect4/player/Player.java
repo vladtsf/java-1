@@ -32,6 +32,13 @@ public class Player {
         return color;
     }
     
+    @Override
+    public boolean equals(Object o) {
+      Player other = (Player) o;
+      
+      return color.equals(color) && name.equals(other.name);
+    }
+    
     
     public boolean hasBomb () {
         return (numBombs != 0);

@@ -188,4 +188,25 @@ public class Board implements Cloneable {
     
     return board;
   }
+  
+  @Override
+  public boolean equals(Object o) {
+    Board other = (Board) o;
+    
+    for (int row = 0; row < grid.length; row++) {
+      for (int col = 0; col < grid[0].length; col++) {
+        try {
+          if(!grid[row][col].equals(other.grid[row][col])) {
+            return false;
+          }
+        } catch(NullPointerException e) {
+          if(grid[row][col] != other.grid[row][col]) {
+            return false;
+          }
+        }
+      }
+    }
+    
+    return true;
+  }
 } // end Board class
