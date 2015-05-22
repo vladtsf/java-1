@@ -34,7 +34,10 @@ public class BoardTest {
           onePieceBoard,
           twoPieceBoard,
           bombTarget,
-          impossibleMove;
+          impossibleMove,
+          winnerHorizontal,
+          winnerVertical,
+          winnerDiagonal;
   
   @BeforeClass
   public static void setUpClass() {
@@ -51,6 +54,9 @@ public class BoardTest {
     twoPieceBoard = new BoardFactory().load("two_pieces");
     bombTarget = new BoardFactory().load("bomb_target");
     impossibleMove = new BoardFactory().load("impossible_move");
+    winnerHorizontal = new BoardFactory().load("winner_horizontal");
+    winnerVertical = new BoardFactory().load("winner_vertical");
+    winnerDiagonal = new BoardFactory().load("winner_diagonal");
   }
   
   @After
@@ -76,5 +82,13 @@ public class BoardTest {
     assertTrue("On on empty board any move should be possible", emptyBoard.possibleMove(new Move(2, BoardFactory.player1)));
     assertFalse("Should handle an impossible move properly", impossibleMove.possibleMove(new Move(2, BoardFactory.player1)));
     assertTrue("BombMove should work no matter what", impossibleMove.possibleMove(new BombMove(2, 6, BoardFactory.player1)));
+  }
+  
+  @Test
+  public void winner() {
+    assertNotNull("Should properly determine a horizontal winner", winnerDiagonal.winner());
+    assertNotNull("Should properly determine a vertical winner", winnerVertical.winner());
+    assertNotNull("Should properly determine a diagonal winner", winnerDiagonal.winner());
+    assertNull("Should not return a Player if there's no winner", emptyBoard.winner());
   }
 }
