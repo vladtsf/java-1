@@ -32,7 +32,8 @@ public class BoardFactory {
       List<String> lines = Files.readAllLines(Paths.get("test/connect4/fixtures/boards/" + fName +  ".txt"));
       Player[][] grid = new Player[6][7];
       
-      int row = 6;
+      int row = 5;
+      
       for (String line : lines) {
         for(int col = 0; col < line.length(); col++) {
           char ch = line.charAt(col);
@@ -45,6 +46,7 @@ public class BoardFactory {
               break;
           }
         }
+        
         row--;
       }
 

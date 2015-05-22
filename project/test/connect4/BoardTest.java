@@ -33,11 +33,8 @@ public class BoardTest {
           emptyBoard,
           onePieceBoard,
           twoPieceBoard,
-          bombTarget;
-//  private Board boardWithTwoDots;
-//  private Player p1 = new Player("vova", Color.yellow);
-//  private Player p2 = new StupidComputerPlayer("computer", Color.yellow);
-//  private Field grid;
+          bombTarget,
+          impossibleMove;
   
   @BeforeClass
   public static void setUpClass() {
@@ -53,14 +50,11 @@ public class BoardTest {
     onePieceBoard = new BoardFactory().load("one_piece");
     twoPieceBoard = new BoardFactory().load("two_pieces");
     bombTarget = new BoardFactory().load("bomb_target");
+    impossibleMove = new BoardFactory().load("impossible_move");
   }
   
   @After
   public void tearDown() {
-    emptyBoard = null;
-    onePieceBoard = null;
-    twoPieceBoard = null;
-    bombTarget = null;
   }
 
   @Test
@@ -75,5 +69,12 @@ public class BoardTest {
   public void addBombPiece() {
     bombTarget.addPiece(new BombMove(3, 1, BoardFactory.player1));
     assertEquals("Should be able to handle a bomb piece", bombTarget, emptyBoard);
+  }
+  
+  @Test
+  public void possibleMove() {
+    assertTrue("On on empty board any move should be possible", emptyBoard.possibleMove(new Move(2, BoardFactory.player1)));
+    assertFalse("Should handle an impossible move properly", impossibleMove.possibleMove(new Move(2, BoardFactory.player1)));
+    assertTrue("BombMove should work no matter what", impossibleMove.possibleMove(new BombMove(2, 6, BoardFactory.player1)));
   }
 }
